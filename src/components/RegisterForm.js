@@ -25,7 +25,7 @@ export function RegisterForm(){
         const promise = axios.post(URL, body)
         
         promise.then((a)=>{
-            navigate("/")
+            navigate("/sign-in")
             setLoad(false)
         })
         promise.catch((a)=>{

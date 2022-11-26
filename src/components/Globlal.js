@@ -2,7 +2,7 @@ import { ThreeDots } from "react-loader-spinner"
 import { createContext, useState } from 'react';
 import styled from "styled-components";
 
-export const apiURL = "https://mywalletdanne.onrender.com/"
+export const apiURL = "http://localhost:5000/"
 
 export const AuthContext = createContext([false, () => {}])
 

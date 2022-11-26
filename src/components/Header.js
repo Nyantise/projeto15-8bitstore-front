@@ -11,7 +11,7 @@ export default function Header(){
         <HeaderStyle>
             <div className="header">
                 <div className="greet">
-                    <h1>Bem vindo,{user.name}</h1>
+                    <h1>Bem vindo/a, {user.name}</h1>
                     <h2>O que você gostaria de jogar?</h2>
                 </div>
                 <img src={logout} alt=""

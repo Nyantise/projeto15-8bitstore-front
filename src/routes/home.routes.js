@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import styled from "styled-components"
-import add from "../assets/add.svg"
-import remove from "../assets/remove.svg"
 import { apiURL, AuthContext } from "../components/Globlal"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import Header from "../components/Header"
+import CategoriesCarrousel from '../components/CategoriesCarrousel'
 
 export default function HomePage(){
     const navigate = useNavigate()
@@ -45,7 +44,7 @@ export default function HomePage(){
         >
             <Header/>
             <div className="content">
-                <div className="categories"></div>
+                <CategoriesCarrousel />
             </div>
         </HomeStyle>
     )
