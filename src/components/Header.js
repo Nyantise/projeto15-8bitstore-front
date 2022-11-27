@@ -6,7 +6,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 export default function Header(){
-    const [user, setUser] = useContext(AuthContext)
+    const [user] = useContext(AuthContext)
     const [cart] = useContext(CartContext)
     const navigate = useNavigate()
     
@@ -62,12 +62,12 @@ align-items: center;
             h3{
                 color: white;
                 position: absolute;
-                bottom: -10px;
+                bottom: -6px;
                 left: 50%;
                 transform: translateX(-50%);
             }
             .cart{
-                margin-top: 16px;
+            margin-top: 12px;
                 color: white;
                 height: 30px;
                 width: 30px;

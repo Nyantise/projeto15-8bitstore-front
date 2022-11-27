@@ -39,9 +39,7 @@ export default function HomePage(){
     // }
 
     return (
-        <HomeStyle 
-        state={1===2? "start" : "center"}
-        >
+        <HomeStyle>
             <Header/>
             <div className="content">
                 <CategoriesCarrousel />

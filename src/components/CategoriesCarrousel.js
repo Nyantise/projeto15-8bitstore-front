@@ -2,31 +2,33 @@ import styled from "styled-components"
 import { FaChessRook, FaGamepad } from "react-icons/fa"
 import { GiFullMotorcycleHelmet } from "react-icons/gi"
 import { RiApps2Fill } from "react-icons/ri"
+import { useNavigate } from "react-router-dom"
 
 export default function CategoriesCarrousel(){
+    const navigate = useNavigate()
 
     return(
         <CategoriesStyle>
             <div className="category c1"
-            onClick={()=>{}}
+            onClick={()=>{navigate("/games/arcade")}}
             >
                 <FaGamepad className="icon"/>
                 <h3>Arcade</h3>
             </div>
             <div className="category c2"
-            onClick={()=>{}}
+            onClick={()=>{navigate("/games/corrida")}}
             >
                 <GiFullMotorcycleHelmet className="icon"/>
                 <h3>Corrida</h3>
             </div>
             <div className="category c3"
-            onClick={()=>{}}
+            onClick={()=>{navigate("/games/estrategia")}}
             >
                 <FaChessRook className="icon"/>
                 <h3>Estratégia</h3>
             </div>
             <div className="category c4"
-            onClick={()=>{}}
+            onClick={()=>{navigate("/games")}}
             >
                 <RiApps2Fill className="icon"/>
                 <h3>Mais</h3>
