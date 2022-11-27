@@ -27,16 +27,13 @@ export function LoginForm(){
         promise.then((a)=>{
             setUser(a.data)
             setLoad(false)
+            navigate("/")
         })
         promise.catch((a)=>{
             const msg = a.response;
             alert(msg)
             setLoad(false)
         })
-    }
-    
-    if(!user === false){
-        return <HomePage />
     }
 
     return(

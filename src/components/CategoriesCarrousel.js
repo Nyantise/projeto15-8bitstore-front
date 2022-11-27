@@ -7,19 +7,27 @@ export default function CategoriesCarrousel(){
 
     return(
         <CategoriesStyle>
-            <div className="category c1">
+            <div className="category c1"
+            onClick={()=>{}}
+            >
                 <FaGamepad className="icon"/>
                 <h3>Arcade</h3>
             </div>
-            <div className="category c2">
+            <div className="category c2"
+            onClick={()=>{}}
+            >
                 <GiFullMotorcycleHelmet className="icon"/>
                 <h3>Corrida</h3>
             </div>
-            <div className="category c3">
+            <div className="category c3"
+            onClick={()=>{}}
+            >
                 <FaChessRook className="icon"/>
                 <h3>Estratégia</h3>
             </div>
-            <div className="category c4">
+            <div className="category c4"
+            onClick={()=>{}}
+            >
                 <RiApps2Fill className="icon"/>
                 <h3>Mais</h3>
             </div>

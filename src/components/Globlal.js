@@ -5,14 +5,18 @@ import styled from "styled-components";
 export const apiURL = "http://localhost:5000/"
 
 export const AuthContext = createContext([false, () => {}])
+export const CartContext = createContext([[], () => {}])
 
 export const GlobalProvider = ({children}) => {
     const [user, setUser] = useState(false)
+    const [cart, setCart] = useState([])
 
     return (
+        <CartContext.Provider value={[cart, setCart]}>
         <AuthContext.Provider value={[user, setUser]}>
             {children}
         </AuthContext.Provider>
+        </CartContext.Provider>
     )
 }
 
