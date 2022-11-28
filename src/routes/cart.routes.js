@@ -8,34 +8,36 @@ import axios from "axios"
 export default function CartPage(){
     const navigate = useNavigate()
     const [cart, setCart] = useContext(CartContext)
-    const [list, setList] = useState(false)
 
-    // useEffect(()=>{
-    //     const URL = apiURL+"posts"
-    //     const config = {
-    //         headers: {'Authorization': 'Bearer ' + user.token}
-    //     }
+    const [products, setProducts] = useState(getProducts(cart))
+    const [productsCount, setProductsCount] = useState(getQuantities(products))
 
-    //     const promise = axios.get(URL, config)
-        
-    //     promise.then((a)=>{
-    //         setList(a.data)
-    //     })
-    //     promise.catch((a)=>{
-    //         const msg = a.response;
-    //         alert(msg)
-    //         console.log(user.token)
-    //     })
-    // },[])
+    function getProducts(arr){
+        const seen = new Set();
+        const filteredArr = arr.filter(el => {
+            const duplicate = seen.has(el.gameid);
+            seen.add(el.gameid);
+            return !duplicate;
+          });
+        return filteredArr
+    }
 
-    // function ReadList(){
-    //     return list.map((item) => (
-    //         <span>
-    //             <h3>{item.desc}</h3>
-    //             <h3 className={item.type}>{"R$"+item.value.toFixed(2)}</h3>
-    //         </span>
-    //     ))
-    // }
+    function getQuantities(arr){
+        return arr.map(item => {return cart.filter(x => x.gameid === item.gameid).length})
+    }
+
+
+    function ReadList(){
+        return products.map((item, index) => (
+            <div className="product">
+                <div className="title">
+                    <h3>{item.title}</h3>
+                    <h3>{"R$"+Number(item.price).toFixed(2)+" x "+productsCount[index]}</h3>
+                </div>
+                <h2>{"R$"+Number(item.price*productsCount[index]).toFixed(2)}</h2>
+            </div>
+        ))
+    }
 
     return (
         <CartStyle>
@@ -50,8 +52,9 @@ export default function CartPage(){
                         <h1 className="emptytit">Aqui tá meio vazio</h1>
                         <h3 className="emptysub">Que tal dar uma olhada em nossa loja?</h3>
                     </>
-                        
-                    : <></>
+                    :<>
+                        <ReadList />
+                    </>
                 }
             </div>
         </CartStyle>
@@ -99,6 +102,7 @@ const CartStyle = styled.div`
 
         .liltip{
             margin-top: 12px;
+            margin-bottom: 32px;
             width: 25%;
             height: 6px;
             border-radius: 50px;
@@ -114,6 +118,14 @@ const CartStyle = styled.div`
             text-align: center;
             color: gray;
             font-weight: 300;
+        }
+        .product{
+            margin-block: 8px;
+            padding-inline: 32px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     }
 `

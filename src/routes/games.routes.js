@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
-import { apiURL, CartContext } from "../components/Globlal"
+import { apiURL, CartContext, MyCart } from "../components/Globlal"
 import { useLocation, useNavigate } from "react-router-dom"
 import { IoMdArrowRoundBack } from "react-icons/io"
 import axios from "axios"
@@ -45,6 +45,7 @@ export default function GamesPage(){
             <div className="header">
                 <IoMdArrowRoundBack className="back" onClick={()=> navigate(-1)}/>
                 <h1>{search === "a" ? "Todos os Jogos" : search.toUpperCase()}</h1>
+                <MyCart className="cart"/>
             </div>
             <div className="content">
                 <div className="liltip"/>
@@ -63,10 +64,15 @@ const GamesStyle = styled.div`
     align-items: center;
 
     .header{
+        display: flex;
+        justify-content: space-between;
         position: relative;
         width: 100%;
         padding-inline: 16px;
 
+        .cart{
+            margin: 16px;
+        }
         .back{
             margin-top: 16px;
             color: white;
