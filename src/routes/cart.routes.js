@@ -40,7 +40,7 @@ export default function CartPage(){
     return (
         <CartStyle>
             <div className="header">
-                <IoMdArrowRoundBack className="back" onClick={()=> navigate("/")}/>
+                <IoMdArrowRoundBack className="back" onClick={()=> navigate(-1)}/>
                 <h1>Carrinho</h1>
             </div>
             <div className="content">

@@ -1,13 +1,11 @@
 import { useContext, useState } from "react"
 import styled from "styled-components"
-import { AuthContext, CartContext, httpQuerySelector } from "./Globlal"
-import { BsCart3 } from "react-icons/bs"
+import { AuthContext, httpQuerySelector, MyCart } from "./Globlal"
 import { BiSearchAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 export default function Header(){
     const [user] = useContext(AuthContext)
-    const [cart] = useContext(CartContext)
     const navigate = useNavigate()
     const [search, setSearch] = useState("")
 
@@ -26,14 +24,7 @@ export default function Header(){
                     <h1>Bem vindo/a, {user.name}</h1>
                     <h2>O que você gostaria de jogar?</h2>
                 </div>
-                <div className="cart-wrap">
-                    <h3>
-                        {cart.length}
-                    </h3>
-                    <BsCart3 className="cart"
-                        onClick={()=> navigate("/cart")}
-                    />
-                </div>
+                <MyCart />
             </div>
             <div className="input-container">
                 <input
@@ -64,23 +55,6 @@ align-items: center;
         padding-block: 24px;
         margin-top: 8px;
 
-        .cart-wrap{
-            position: relative;
-
-            h3{
-                color: white;
-                position: absolute;
-                bottom: -6px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            .cart{
-            margin-top: 12px;
-                color: white;
-                height: 30px;
-                width: 30px;
-            }
-        }
         .greet{
             display: flex;
             flex-direction: column;

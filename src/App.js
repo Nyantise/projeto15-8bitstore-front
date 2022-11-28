@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { GlobalProvider } from "./components/Globlal";
 import CartPage from "./routes/cart.routes";
+import GamePage from "./routes/game.routes";
 import GamesPage from "./routes/games.routes";
 import HomePage from "./routes/home.routes";
 import LoginPage from "./routes/login.routes";
@@ -19,7 +20,7 @@ function App() {
             <Route path="/sign-up" element={<RegisterPage/>}/>
             <Route path="/cart" element={<CartPage/>}/>
             <Route path="/games" element={<GamesPage/>}/>
-            <Route path="/game/:id" element={<CartPage/>}/>
+            <Route path="/game/:id" element={<GamePage/>}/>
           </Routes>
         </BrowserRouter>
       </GlobalProvider>

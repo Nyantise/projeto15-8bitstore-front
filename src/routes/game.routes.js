@@ -1,26 +1,22 @@
 import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import { apiURL, CartContext } from "../components/Globlal"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { IoMdArrowRoundBack } from "react-icons/io"
 import axios from "axios"
 
 export default function GamesPage(){
     const navigate = useNavigate()
-    const [cart, setCart] = useContext(CartContext)
-    const [gameList, setGameList] = useState([])
-
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search)
-    const [search,] = queryParams.values()
+    const [gameInfo, setGameInfo] = useState([])
+    const {id} = useParams()
 
     useEffect(()=>{
-        const URL = apiURL+"products"+location.search
+        const URL = apiURL+"products/"+id
 
         const promise = axios.get(URL)
         
         promise.then((a)=>{
-            setGameList(a.data)
+            setGameInfo(a.data[0])
         })
         promise.catch((a)=>{
             const msg = a.response;
@@ -28,44 +24,50 @@ export default function GamesPage(){
         })
     },[])
 
-    function ReadList(){
-        return gameList.map((item) => (
-            <div className="game-wrapper"
-            onClick={()=>navigate("/game/"+item._id)}
-            >
-                <h2>{item.title}</h2>
-                <img src={item.img}/>
-                <h3>{"R$"+Number(item.price).toFixed(2)}</h3>
-            </div>
-        ))
-    }
-
     return (
         <GamesStyle>
+            <div className="shadow"/>
+            <img className="cover" src={gameInfo.img} />
             <div className="header">
                 <IoMdArrowRoundBack className="back" onClick={()=> navigate(-1)}/>
-                <h1>{search === "a" ? "Todos os Jogos" : search.toUpperCase()}</h1>
             </div>
             <div className="content">
                 <div className="liltip"/>
-                <ReadList />
             </div>
         </GamesStyle>
     )
 }
 
 const GamesStyle = styled.div`
+    position: relative;
     height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+
+    .shadow{
+        top: 0;
+        position: absolute;
+        height: 35%;
+        width: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+    }
+    .cover{
+        top: 0;
+        position: absolute;
+        height: 35%;
+        width: 100%;
+        object-fit: cover;
+    }
 
     .header{
         position: relative;
         width: 100%;
         padding-inline: 16px;
+        z-index: 20;
 
         .back{
             margin-top: 16px;
@@ -90,10 +92,11 @@ const GamesStyle = styled.div`
         border-top-left-radius: 35px;
         border-top-right-radius: 35px;
         background-color: white;
-        height: 100%;
+        height: 70%;
         width: 100vw;
         margin-top: 30px;
         overflow-y: scroll;
+        z-index: 10;
 
         .liltip{
             margin-top: 12px;
@@ -101,29 +104,6 @@ const GamesStyle = styled.div`
             height: 6px;
             border-radius: 50px;
             background-color: #656ded;
-        }
-        .game-wrapper{
-            width: 100%;
-            padding: 16px;
-            position: relative;
-
-            img{
-                object-fit: cover;
-                margin-inline: auto;
-                width: 100%;
-                height: 180px;
-                border-radius: 12px;
-            }
-            h3{
-                border-radius: 8px;
-                padding-inline: 12px;
-                padding-top: 4px;
-                color: white;
-                background-color: rgba(25,25,25,0.6);
-                position: absolute;
-                bottom: 30px;
-                right: 24px;
-            }
         }
     }
 `

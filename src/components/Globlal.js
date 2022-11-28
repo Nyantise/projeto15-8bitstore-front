@@ -1,6 +1,8 @@
 import { ThreeDots } from "react-loader-spinner"
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import styled from "styled-components";
+import { BsCart3 } from "react-icons/bs"
+import { useNavigate } from "react-router-dom";
 
 export const apiURL = "https://eightbit-api.onrender.com/"
 
@@ -26,6 +28,37 @@ export const GlobalProvider = ({children}) => {
         </CartContext.Provider>
     )
 }
+
+export function MyCart(){
+    const [cart] = useContext(CartContext)
+    const navigate = useNavigate()
+
+    return (
+    <CartWrap>
+        <h3>{cart.length}</h3>
+        <BsCart3 className="cart"
+            onClick={()=> navigate("/cart")}
+        />
+    </CartWrap>
+    )
+}
+const CartWrap = styled.div`
+    position: relative;
+
+    h3{
+        color: white;
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        }
+    .cart{
+        margin-top: 12px;
+        color: white;
+        height: 30px;
+        width: 30px;
+    }
+`
 
 
 export const Loading = (props) => {
