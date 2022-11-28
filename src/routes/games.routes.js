@@ -74,9 +74,10 @@ const GamesStyle = styled.div`
             height: 40px;
         }
         h1{
+            font-size: 24px;
             color: white;
             position: absolute;
-            top: 16px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
         }

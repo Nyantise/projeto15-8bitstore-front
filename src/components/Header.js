@@ -1,6 +1,6 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import styled from "styled-components"
-import { AuthContext, CartContext } from "./Globlal"
+import { AuthContext, CartContext, httpQuerySelector } from "./Globlal"
 import { BsCart3 } from "react-icons/bs"
 import { BiSearchAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,15 @@ export default function Header(){
     const [user] = useContext(AuthContext)
     const [cart] = useContext(CartContext)
     const navigate = useNavigate()
+    const [search, setSearch] = useState("")
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            navigate("/games"+httpQuerySelector(search, 0))
+        }
+      }  
+    
+    
     
     return(
         <HeaderStyle>
@@ -30,11 +39,10 @@ export default function Header(){
                 <input
                     type="text"
                     placeholder="Nome do jogo ou categoria"
-                    // value={email}
-                    // onChange={e=> setEmail(e.target.value)}
-                    // required
-                    // disabled={load === true ? "disabled" : ""}
-                />
+                    onKeyDown={handleKeyDown}
+                    value={search}
+                    onChange={e=> setSearch(e.target.value)}
+                    />
                 <BiSearchAlt className="search"/>
             </div>
         </HeaderStyle>
