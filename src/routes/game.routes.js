@@ -8,6 +8,7 @@ import axios from "axios"
 export default function GamesPage(){
     const navigate = useNavigate()
     const [gameInfo, setGameInfo] = useState([])
+    const [count, setCount] = useState(0)
     const [categoriesString, setCategoriesString] = useState("")
     const {id} = useParams()
     const [user] = useContext(AuthContext)
@@ -27,18 +28,18 @@ export default function GamesPage(){
         return string
     }
 
-    function addToCart(gameid, title, price, img){
+    function addToCart(gameid, title, price, img, value){
         let cartArr = cart
         let already = false
 
         cartArr.map(item => {
             if(item.gameid === gameid){
                 already = true
-                item.quantity = item.quantity + 1
+                item.quantity = item.quantity + value
             }
         })
 
-        if(!already){
+        if(!already && value > 0){
             const body = {
                 gameid,
                 title,
@@ -48,6 +49,7 @@ export default function GamesPage(){
             }
             cartArr.push(body)
         }
+        cartArr = cartArr.filter((item) => item.quantity !== 0)
         setCart(cartArr)
         let num = 0
         cartArr.map(item => {num += item.quantity})
@@ -63,12 +65,18 @@ export default function GamesPage(){
         promise.then((a)=>{
             setGameInfo(a.data[0])
             setCategoriesString(cutterText(a.data[0].categories))
+            gameQuantity()
         })
         promise.catch((a)=>{
             const msg = a.response;
             alert(msg)
         })
     },[])
+
+    function gameQuantity(){
+        const thisGame = cart.filter(item => item.gameid === id)
+        setCount(thisGame[0].quantity)
+    }
 
     return (
         <GamesStyle>
@@ -85,10 +93,19 @@ export default function GamesPage(){
                 <h3>{gameInfo.desc}</h3>
             </div>
             <div className="bottombar">
-                <h1>{"R$"+Number(gameInfo.price).toFixed(2)}</h1>
+                <h1>{"R$"+Number(gameInfo.price).toFixed(2)+" x "+count}</h1>
                 <button
-                onClick={()=> addToCart(id, gameInfo.title, gameInfo.price, gameInfo.img)}
-                >Adicionar ao carrinho</button>
+                onClick={()=> {
+                    addToCart(id, gameInfo.title, gameInfo.price, gameInfo.img, 1) 
+                    gameQuantity()
+                }}
+                >+</button>
+                <button
+                onClick={()=> {
+                    addToCart(id, gameInfo.title, gameInfo.price, gameInfo.img, -1)
+                    gameQuantity()
+                }}                    
+                >-</button>
             </div>
         </GamesStyle>
     )
@@ -209,9 +226,10 @@ const GamesStyle = styled.div`
         button{
             border-radius: 12px;
             color: white;
-            font-size: 19px;
+            font-weight: 600;
+            font-size: 28px;
             padding-inline: 16px;
-            padding-block: 10px;
+            padding-block: 4px;
             border: none;
             background-color: #656ded;
         }

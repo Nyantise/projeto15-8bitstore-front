@@ -8,10 +8,13 @@ import axios from "axios"
 export default function CartPage(){
     const navigate = useNavigate()
     const [cart, setCart] = useContext(CartContext)
+    const [orderState, setOrderState] = useState(false)
 
     function ReadList(){
         return cart.map(item => (
-            <div className="product">
+            <div className="product"
+            onClick={()=> navigate("/game/"+item.gameid)}
+            >
                 <div className="title">
                     <h3>{item.title}</h3>
                     <h3>{"R$"+Number(item.price).toFixed(2)+" x "+item.quantity}</h3>
@@ -28,11 +31,28 @@ export default function CartPage(){
     }
 
     function order(){
-        
+
     }
+
 
     return (
         <CartStyle>
+            {orderState ? 
+            <>
+                <div className="shadow"/>
+                <ShowUP>
+                    <h2>Deseja finalizar a compra?</h2>
+                    <span>
+                        <button
+                        onClick={()=> setOrderState(false)}
+                        >Não</button>
+                        <button
+                        onClick={()=> order()}
+                        >Sim</button>
+                    </span>
+                </ShowUP>
+            </>
+            : <></>}
             <div className="header">
                 <IoMdArrowRoundBack className="back" onClick={()=> navigate(-1)}/>
                 <h1>Carrinho</h1>
@@ -52,7 +72,7 @@ export default function CartPage(){
             <div className="bottombar">
                 <h1>{"R$"+Number(totalValue()).toFixed(2)}</h1>
                 <button
-                onClick={()=>{order()}}
+                onClick={()=>{setOrderState(true)}}
                 >Finalizar Compra</button>
             </div>
         </CartStyle>
@@ -150,5 +170,41 @@ const CartStyle = styled.div`
             border: none;
             background-color: #656ded;
         }
+    }
+    .shadow{
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.6);
+        z-index: 49;
+    }
+`
+
+const ShowUP = styled.div`
+    border-radius: 12px;
+    background-color: white;
+    width: 90%;
+    height: 70vw;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    justify-content: center;
+    align-items: center;
+
+    span{
+        display: flex;
+        gap: 16px;
+    }
+    button{
+        font-size: 22px;
+        padding-block: 6px;
+        padding-inline: 12px;
     }
 `
