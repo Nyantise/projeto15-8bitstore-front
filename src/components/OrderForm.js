@@ -6,65 +6,60 @@ import axios from "axios";
 import HomePage from "../routes/home.routes";
 import { useNavigate } from "react-router-dom";
 
-export function LoginForm(){
+export function OrderForm(){
     const navigate = useNavigate()
     const [adress, setAdress] = useState("")
     const [method, setMethod] = useState("")
-    const [load, setLoad] = useState(false)
     const [user, setUser] = useContext(AuthContext)
 
     function submit(e){
         e.preventDefault()
-        setLoad(true)
-        const URL = apiURL+"sign-in"
+        const URL = apiURL+"order"
 
         const body = {
-            email,
-            password: pass
+            adress,
+            method
         }
-        const promise = axios.post(URL, body)
+        const config = {
+            headers: { "Authorization": "Bearer "+user.token }
+        }
+        const promise = axios.post(URL, body, config)
         
         promise.then((a)=>{
-            setUser(a.data)
-            setLoad(false)
             navigate("/")
         })
         promise.catch((a)=>{
             const msg = a.response;
             alert(msg)
-            setLoad(false)
         })
     }
 
     return(
         <FormStyle onSubmit={submit}>
             <input
-                type="email"
-                placeholder="E-mail"
-                value={email}
-                onChange={e=> setEmail(e.target.value)}
+                type="text"
+                placeholder="Endereço"
+                value={adress}
+                onChange={e=> setAdress(e.target.value)}
                 required
-                disabled={load === true ? "disabled" : ""}
             />
-            <input
-                type="password"
-                placeholder="Senha"
-                value={pass}
-                onChange={e=> setPass(e.target.value)}
-                required
-                disabled={load === true ? "disabled" : ""}
-            />
+            <label>Metodo de Pagamento</label>
+            <span>
+                <input type="radio" checked={method === 'Cartão de Crédito/Débito'} value="Cartão de Crédito/Débito" onClick={() => setMethod('Cartão de Crédito/Débito')} />
+                <label>Cartão de Crédito/Débito</label>
+            </span>
+            <span>
+                <input type="radio" label="PIX" checked={method === 'PIX'} value="PIX" onClick={() => setMethod('PIX')} />
+                <label>Pix</label>
+            </span>
+            <span>
+                <input type="radio" label="Boleto" checked={method === 'Boleto'} value="Boleto" onClick={() => setMethod('Boleto')} />
+                <label>Boleto</label>
+            </span>
             <button 
                 type="submit"
-                disabled={load === true ? "disabled" : ""}
-            >{load === false ? "Entrar" : <Loading/>}</button>
-
-            <button
-                className="register"
-                disabled={load === true ? "disabled" : ""}
-                onClick={()=> navigate("/sign-up")}
-            >Primeira vez? Cadastre-se!
-            </button>
+                disabled={method ==="" ? "disabled" : ""}
+            >Enviar</button>
         </FormStyle>
     )
 }

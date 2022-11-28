@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import styled from "styled-components"
-import { apiURL, CartContext } from "../components/Globlal"
+import { apiURL, AuthContext, CartContext } from "../components/Globlal"
 import { useNavigate } from "react-router-dom"
 import { IoMdArrowRoundBack } from "react-icons/io"
 import axios from "axios"
@@ -8,6 +8,7 @@ import axios from "axios"
 export default function CartPage(){
     const navigate = useNavigate()
     const [cart, setCart] = useContext(CartContext)
+    const [user] = useContext(AuthContext)
     const [orderState, setOrderState] = useState(false)
 
     function ReadList(){
@@ -32,6 +33,30 @@ export default function CartPage(){
 
     function order(){
 
+        const newCart = cart.map(item => {return {productId: item.gameid, quantity: item.quantity}})
+
+        const URL = apiURL+"cart/"+user.id
+        const body = {
+            products: newCart
+        }
+        const config = {
+            headers: { "Authorization": "Bearer "+user.token }
+        }
+
+        const promise = axios.post(URL, body, config)
+        
+        promise.then((a)=>{
+            console.log(a.data)
+            setCart([])
+            navigate("/order")
+        })
+        promise.catch((a)=>{
+            const msg = a.response;
+            alert(msg)
+        })
+
+        console.log(user)
+
     }
 
 
@@ -41,15 +66,27 @@ export default function CartPage(){
             <>
                 <div className="shadow"/>
                 <ShowUP>
-                    <h2>Deseja finalizar a compra?</h2>
-                    <span>
+                    {user === false 
+                    ?<>
+                        <h2>Voce precisa criar uma conta para continuar</h2>
+                    </> 
+                    
+                    :<h2>Deseja finalizar a compra?</h2>}
+                    {user === false 
+                    ?<>
+                    <button
+                    onClick={()=> navigate("/sign-up")}
+                    >Criar Conta</button>
+                    </>
+                    
+                    :<span>
                         <button
                         onClick={()=> setOrderState(false)}
                         >Não</button>
                         <button
                         onClick={()=> order()}
                         >Sim</button>
-                    </span>
+                    </span>}
                 </ShowUP>
             </>
             : <></>}

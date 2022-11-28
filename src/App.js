@@ -6,6 +6,7 @@ import GamePage from "./routes/game.routes";
 import GamesPage from "./routes/games.routes";
 import HomePage from "./routes/home.routes";
 import LoginPage from "./routes/login.routes";
+import OrderPage from "./routes/order.routes";
 import RegisterPage from "./routes/register.routes";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/sign-up" element={<RegisterPage/>}/>
             <Route path="/cart" element={<CartPage/>}/>
             <Route path="/games" element={<GamesPage/>}/>
+            <Route path="/order" element={<OrderPage/>}/>
             <Route path="/game/:id" element={<GamePage/>}/>
           </Routes>
         </BrowserRouter>

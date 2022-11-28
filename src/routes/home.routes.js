@@ -11,32 +11,6 @@ export default function HomePage(){
     const [user, setUser] = useContext(AuthContext)
     const [list, setList] = useState(false)
 
-    // useEffect(()=>{
-    //     const URL = apiURL+"posts"
-    //     const config = {
-    //         headers: {'Authorization': 'Bearer ' + user.token}
-    //     }
-
-    //     const promise = axios.get(URL, config)
-        
-    //     promise.then((a)=>{
-    //         setList(a.data)
-    //     })
-    //     promise.catch((a)=>{
-    //         const msg = a.response;
-    //         alert(msg)
-    //         console.log(user.token)
-    //     })
-    // },[])
-
-    // function ReadList(){
-    //     return list.map((item) => (
-    //         <span>
-    //             <h3>{item.desc}</h3>
-    //             <h3 className={item.type}>{"R$"+item.value.toFixed(2)}</h3>
-    //         </span>
-    //     ))
-    // }
 
     return (
         <HomeStyle>
@@ -44,7 +18,6 @@ export default function HomePage(){
             <div className="content">
                 <CategoriesCarrousel />
                 <div className="pop-game">
-                    <h2>Jogo mais Popular</h2>
 
                 </div>
             </div>
