@@ -29,15 +29,29 @@ export default function GamesPage(){
 
     function addToCart(gameid, title, price, img){
         let cartArr = cart
-        const body = {
-            gameid,
-            title,
-            price,
-            img
+        let already = false
+
+        cartArr.map(item => {
+            if(item.gameid === gameid){
+                already = true
+                item.quantity = item.quantity + 1
+            }
+        })
+
+        if(!already){
+            const body = {
+                gameid,
+                title,
+                price,
+                img,
+                quantity: 1
+            }
+            cartArr.push(body)
         }
-        cartArr.push(body)
         setCart(cartArr)
-        setShowCart(cartArr.length)
+        let num = 0
+        cartArr.map(item => {num += item.quantity})
+        setShowCart(num)
     }
 
     useEffect(()=>{

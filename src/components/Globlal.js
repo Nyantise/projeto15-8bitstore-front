@@ -33,9 +33,12 @@ export function MyCart(props){
     const [cart] = useContext(CartContext)
     const navigate = useNavigate()
 
+    let num = 0
+    cart.map(item => {num += item.quantity})
+
     return (
     <CartWrap>
-        <h3>{props.count||cart.length}</h3>
+        <h3>{props.count||num}</h3>
         <BsCart3 className="cart"
             onClick={()=> navigate("/cart")}
         />
