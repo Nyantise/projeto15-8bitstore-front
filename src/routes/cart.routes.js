@@ -9,34 +9,26 @@ export default function CartPage(){
     const navigate = useNavigate()
     const [cart, setCart] = useContext(CartContext)
 
-    const [products, setProducts] = useState(getProducts(cart))
-    const [productsCount, setProductsCount] = useState(getQuantities(products))
-
-    function getProducts(arr){
-        const seen = new Set();
-        const filteredArr = arr.filter(el => {
-            const duplicate = seen.has(el.gameid);
-            seen.add(el.gameid);
-            return !duplicate;
-          });
-        return filteredArr
-    }
-
-    function getQuantities(arr){
-        return arr.map(item => {return cart.filter(x => x.gameid === item.gameid).length})
-    }
-
-
     function ReadList(){
-        return products.map((item, index) => (
+        return cart.map(item => (
             <div className="product">
                 <div className="title">
                     <h3>{item.title}</h3>
-                    <h3>{"R$"+Number(item.price).toFixed(2)+" x "+productsCount[index]}</h3>
+                    <h3>{"R$"+Number(item.price).toFixed(2)+" x "+item.quantity}</h3>
                 </div>
-                <h2>{"R$"+Number(item.price*productsCount[index]).toFixed(2)}</h2>
+                <h2>{"R$"+Number(item.price*item.quantity).toFixed(2)}</h2>
             </div>
         ))
+    }
+
+    function totalValue(){
+        let tValue = 0
+        cart.map(item => tValue += item.price*item.quantity)
+        return tValue
+    }
+
+    function order(){
+        
     }
 
     return (
@@ -57,11 +49,18 @@ export default function CartPage(){
                     </>
                 }
             </div>
+            <div className="bottombar">
+                <h1>{"R$"+Number(totalValue()).toFixed(2)}</h1>
+                <button
+                onClick={()=>{order()}}
+                >Finalizar Compra</button>
+            </div>
         </CartStyle>
     )
 }
 
 const CartStyle = styled.div`
+    position: relative;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -120,12 +119,36 @@ const CartStyle = styled.div`
             font-weight: 300;
         }
         .product{
+            border-radius: 12px;
+            background-color: rgba(25,25,25,0.08);
             margin-block: 8px;
-            padding-inline: 32px;
-            width: 100%;
+            padding-inline: 16px;
+            width: 90%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+    }
+    .bottombar{
+        padding-inline: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 80px;
+        z-index: 11;
+        position: absolute;
+        bottom: 0;
+        background-color: white;
+
+        button{
+            border-radius: 12px;
+            color: white;
+            font-size: 19px;
+            padding-inline: 16px;
+            padding-block: 10px;
+            border: none;
+            background-color: #656ded;
         }
     }
 `
