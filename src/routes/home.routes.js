@@ -43,6 +43,10 @@ export default function HomePage(){
             <Header/>
             <div className="content">
                 <CategoriesCarrousel />
+                <div className="pop-game">
+                    <h2>Jogo mais Popular</h2>
+
+                </div>
             </div>
         </HomeStyle>
     )
@@ -63,5 +67,14 @@ const HomeStyle = styled.div`
         height: 100%;
         width: 100vw;
         margin-top: 30px;
+
+        .pop-game{
+            padding-inline: 18px;
+            margin-top: 50px;
+            
+            h2{
+                color: #36324f;
+            }
+        }
     }
 `

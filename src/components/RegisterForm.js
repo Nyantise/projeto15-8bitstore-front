@@ -79,7 +79,7 @@ export function RegisterForm(){
             <button
                 className="register"
                 disabled={load === true ? "disabled" : ""}
-                onClick={()=> navigate("/signin")}
+                onClick={()=> navigate("/sign-in")}
             >Já tem uma conta? Entre agora!
             </button>
         </FormStyle>

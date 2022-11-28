@@ -62,7 +62,7 @@ export function LoginForm(){
             <button
                 className="register"
                 disabled={load === true ? "disabled" : ""}
-                onClick={()=> navigate("/signup")}
+                onClick={()=> navigate("/sign-up")}
             >Primeira vez? Cadastre-se!
             </button>
         </FormStyle>

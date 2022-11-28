@@ -3,6 +3,7 @@ import { FaChessRook, FaGamepad } from "react-icons/fa"
 import { GiFullMotorcycleHelmet } from "react-icons/gi"
 import { RiApps2Fill } from "react-icons/ri"
 import { useNavigate } from "react-router-dom"
+import { httpQuerySelector } from "./Globlal"
 
 export default function CategoriesCarrousel(){
     const navigate = useNavigate()
@@ -10,25 +11,25 @@ export default function CategoriesCarrousel(){
     return(
         <CategoriesStyle>
             <div className="category c1"
-            onClick={()=>{navigate("/games/arcade")}}
+            onClick={()=>{navigate("/games"+httpQuerySelector("casual", 10))}}
             >
                 <FaGamepad className="icon"/>
-                <h3>Arcade</h3>
+                <h3>Casual</h3>
             </div>
             <div className="category c2"
-            onClick={()=>{navigate("/games/corrida")}}
+            onClick={()=>{navigate("/games"+httpQuerySelector("corrida", 10))}}
             >
                 <GiFullMotorcycleHelmet className="icon"/>
                 <h3>Corrida</h3>
             </div>
             <div className="category c3"
-            onClick={()=>{navigate("/games/estrategia")}}
+            onClick={()=>{navigate("/games"+httpQuerySelector("rpg", 10))}}
             >
                 <FaChessRook className="icon"/>
-                <h3>Estratégia</h3>
+                <h3>RPG</h3>
             </div>
             <div className="category c4"
-            onClick={()=>{navigate("/games")}}
+            onClick={()=>{navigate("/games"+httpQuerySelector("a", 0))}}
             >
                 <RiApps2Fill className="icon"/>
                 <h3>Mais</h3>
@@ -83,5 +84,4 @@ const CategoriesStyle = styled.div`
                 font-weight: 400;
             }
         }
-
 `

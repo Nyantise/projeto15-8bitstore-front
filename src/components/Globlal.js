@@ -2,7 +2,14 @@ import { ThreeDots } from "react-loader-spinner"
 import { createContext, useState } from 'react';
 import styled from "styled-components";
 
-export const apiURL = "http://localhost:5000/"
+export const apiURL = "https://eightbit-api.onrender.com/"
+
+export function httpQuerySelector(search, limit){
+    if (limit === 0)
+        return "?search="+search
+    else
+        return "?search="+search+"&limit="+limit
+}
 
 export const AuthContext = createContext([false, () => {}])
 export const CartContext = createContext([[], () => {}])
