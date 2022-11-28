@@ -20,7 +20,7 @@ export default function GamesPage(){
         const promise = axios.get(URL)
         
         promise.then((a)=>{
-            console.log(a.data)
+            setGameList(a.data)
         })
         promise.catch((a)=>{
             const msg = a.response;
@@ -30,10 +30,13 @@ export default function GamesPage(){
 
     function ReadList(){
         return gameList.map((item) => (
-            <span>
-                <h3>{item.desc}</h3>
-                <h3 className={item.type}>{"R$"+item.value.toFixed(2)}</h3>
-            </span>
+            <div className="game-wrapper"
+            onClick={()=>navigate("/game/"+item._id)}
+            >
+                <h2>{item.title}</h2>
+                <img src={item.img}/>
+                <h3>{"R$"+Number(item.price).toFixed(2)}</h3>
+            </div>
         ))
     }
 
@@ -45,6 +48,7 @@ export default function GamesPage(){
             </div>
             <div className="content">
                 <div className="liltip"/>
+                <ReadList />
             </div>
         </GamesStyle>
     )
@@ -88,6 +92,7 @@ const GamesStyle = styled.div`
         height: 100%;
         width: 100vw;
         margin-top: 30px;
+        overflow-y: scroll;
 
         .liltip{
             margin-top: 12px;
@@ -96,16 +101,28 @@ const GamesStyle = styled.div`
             border-radius: 50px;
             background-color: #656ded;
         }
-        .emptytit{
-            margin-top: 70%;
-            text-align: center;
-            color: gray;
-            font-weight: 400;
-        }
-        .emptysub{
-            text-align: center;
-            color: gray;
-            font-weight: 300;
+        .game-wrapper{
+            width: 100%;
+            padding: 16px;
+            position: relative;
+
+            img{
+                object-fit: cover;
+                margin-inline: auto;
+                width: 100%;
+                height: 180px;
+                border-radius: 12px;
+            }
+            h3{
+                border-radius: 8px;
+                padding-inline: 12px;
+                padding-top: 4px;
+                color: white;
+                background-color: rgba(25,25,25,0.6);
+                position: absolute;
+                bottom: 30px;
+                right: 24px;
+            }
         }
     }
 `

@@ -19,7 +19,7 @@ function App() {
             <Route path="/sign-up" element={<RegisterPage/>}/>
             <Route path="/cart" element={<CartPage/>}/>
             <Route path="/games" element={<GamesPage/>}/>
-            <Route path="/games/:id" element={<CartPage/>}/>
+            <Route path="/game/:id" element={<CartPage/>}/>
           </Routes>
         </BrowserRouter>
       </GlobalProvider>
